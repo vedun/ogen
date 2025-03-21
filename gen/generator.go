@@ -35,6 +35,7 @@ type Generator struct {
 	errType           *ir.Response
 	webhookRouter     WebhookRouter
 	router            Router
+	spec              *ogen.Spec
 
 	log *zap.Logger
 }
@@ -103,6 +104,7 @@ func NewGenerator(spec *ogen.Spec, opts Options) (*Generator, error) {
 		errType:       nil,
 		webhookRouter: WebhookRouter{},
 		router:        Router{},
+		spec:          spec,
 		log:           opts.Logger,
 	}
 

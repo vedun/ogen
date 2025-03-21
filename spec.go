@@ -363,6 +363,35 @@ func (s *PathItem) MarshalJSON() ([]byte, error) {
 	return e.Bytes(), nil
 }
 
+func (s *PathItem) Operations() []string {
+	retVal := []string{}
+	if s.Get != nil {
+		retVal = append(retVal, "GET")
+	}
+	if s.Put != nil {
+		retVal = append(retVal, "PUT")
+	}
+	if s.Post != nil {
+		retVal = append(retVal, "POST")
+	}
+	if s.Delete != nil {
+		retVal = append(retVal, "DELETE")
+	}
+	if s.Options != nil {
+		retVal = append(retVal, "OPTIONS")
+	}
+	if s.Head != nil {
+		retVal = append(retVal, "HEAD")
+	}
+	if s.Patch != nil {
+		retVal = append(retVal, "PATCH")
+	}
+	if s.Trace != nil {
+		retVal = append(retVal, "TRACE")
+	}
+	return retVal
+}
+
 // Operation describes a single API operation on a path.
 //
 // See https://spec.openapis.org/oas/v3.1.0#operation-object.

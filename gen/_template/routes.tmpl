@@ -1,0 +1,19 @@
+{{- /*gotype: github.com/ogen-go/ogen/gen.TemplateConfig*/ -}}
+{{- define "routes" }}
+{{- template "header" $ }}
+
+type RouteElement struct {
+	Path   string
+	Method string
+}
+
+var ProjectRoutes []RouteElement = []RouteElement{
+	{{- range $key, $val := .Spec.Paths }}
+	{{- range $op := $val.Operations}}
+	{Path: "{{$key}}", Method: "{{$op}}"},
+	{{- end}}
+	{{- end}}
+}
+
+{{ end }}
+

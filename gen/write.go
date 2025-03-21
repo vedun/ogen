@@ -16,6 +16,7 @@ import (
 	"golang.org/x/sync/errgroup"
 	"golang.org/x/tools/imports"
 
+	"github.com/ogen-go/ogen"
 	"github.com/ogen-go/ogen/gen/ir"
 	"github.com/ogen-go/ogen/internal/xmaps"
 	"github.com/ogen-go/ogen/ogenregex"
@@ -35,6 +36,7 @@ type TemplateConfig struct {
 	Securities        map[string]*ir.Security
 	Router            Router
 	WebhookRouter     WebhookRouter
+	Spec              *ogen.Spec
 
 	PathsClientEnabled        bool
 	PathsServerEnabled        bool
@@ -265,6 +267,7 @@ func (g *Generator) WriteSource(fs FileSystem, pkgName string) error {
 		Securities:                g.securities,
 		Router:                    g.router,
 		WebhookRouter:             g.webhookRouter,
+		Spec:                      g.spec,
 		PathsClientEnabled:        features.Has(PathsClient),
 		PathsServerEnabled:        features.Has(PathsServer),
 		WebhookClientEnabled:      features.Has(WebhooksClient) && len(g.webhooks) > 0,
@@ -335,6 +338,7 @@ func (g *Generator) WriteSource(fs FileSystem, pkgName string) error {
 		{"unimplemented", features.Has(OgenUnimplemented) && genServer},
 		{"labeler", features.Has(OgenOtel) && genServer},
 		{"operations", (genClient || genServer)},
+		{"routes", true},
 	} {
 		t := t
 		if !t.enabled {
